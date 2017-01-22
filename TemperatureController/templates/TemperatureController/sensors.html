@@ -1,0 +1,37 @@
+{% extends 'TemperatureController/base.html' %}
+
+{% block content %}
+    <div class="container">
+    <h3>Sensoren:</h3>
+        {% if latest_sensor_list %}
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Omschrijving</th>
+                    <th>Temperature</th>
+                    <th>Geactiveerd</th>
+                </tr>
+                {% for sensor in latest_sensor_list %}
+                    <tr>
+                        <th>{{ sensor.get_sensor_id }}</th>
+                        <th>{{ sensor.get_description }}</th>
+                        {% if sensor.enabled == True %}
+                            <th>{{ sensor.get_temperature  }}<strong>&deg;</strong></th>
+                        {% else %}
+                            <th>X </th>
+                        {% endif %}
+                        <th>{% if sensor.enabled == False %}
+                                <input type="checkbox" name="enabled" readonly disabled>
+                            {% else %}
+                                <input type="checkbox" name="enabled" readonly disabled checked>
+                            {% endif %}
+                        </th>
+                        <th><a href="{% url 'TemperatureController:detail' sensor.id %}">Details</a></th>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Geen sensoren gevonden.</p>
+        {% endif %}
+    </div>
+{% endblock %}

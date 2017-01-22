@@ -1,0 +1,15 @@
+{% extends 'TemperatureController/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ sensor.get_description }}</h1>
+        {{ sensor.get_temperature }}<strong>&deg;</strong>
+        <a class="btn btn-default" href="{% url 'TemperatureController:disable' sensor.id %}">
+            {% if sensor.get_enabled == True %}
+                Uitschakelen
+            {% else %}
+                Inschakelen
+            {% endif %}
+        </a>
+    </div>
+{% endblock %}
